@@ -24,9 +24,11 @@ class Ranker:
         for movieId in self.movies_dict:
             if movieId == movieId_1:
                 continue
-            dictionary[movieId] = self.simple_product_association(movieId_1, movieId)
+            value, _, _ = self.simple_product_association(movieId_1, movieId)
+            dictionary[movieId] = value
         # Sorting the dictionary based on the association value
-        sorted_dict = dict(sorted(dictionary.items(), key=lambda item: item[1]))
+        ascending_id_dict = dict(sorted(dictionary.items(), reverse=True))
+        sorted_dict = dict(sorted(ascending_id_dict.items(), key=lambda item: item[1], reverse=True))
         # Returning only the first N elements
         first_N_dict = dict(islice(sorted_dict.items(), N))
         return first_N_dict
@@ -39,7 +41,8 @@ class Ranker:
                 continue
             dictionary[movieId] = self.advanced_product_association(movieId_1, movieId)
         # Sorting the dictionary based on the association value
-        sorted_dict = dict(sorted(dictionary.items(), key=lambda item: item[1]))
+        ascending_id_dict = dict(sorted(dictionary.items(), reverse=True))
+        sorted_dict = dict(sorted(ascending_id_dict.items(), key=lambda item: item[1], reverse=True))
         # Returning only the first N elements
         first_N_dict = dict(islice(sorted_dict.items(), N))
         return first_N_dict
@@ -47,7 +50,8 @@ class Ranker:
 
     def top_N_rated_movies(self, N):
         # Sorting the dictionary based on frequence of each movie
-        sorted_dict = dict(sorted(self.movies_dict.items(), key=lambda item: item[1]['Frequency']))
+        ascending_id_dict = dict(sorted(dictionary.items(), reverse=True))
+        sorted_dict = dict(sorted(self.ascending_id_dict.items(), key=lambda item: item[1]['Frequency'], reverse=True))
         # Returning the top N rated movies
         top_N_rated = dict(islice(sorted_dict.items(), N))
         return top_N_rated
