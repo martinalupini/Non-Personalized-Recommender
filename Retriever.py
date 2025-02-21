@@ -1,3 +1,6 @@
+__author__ = 'Martina Lupini'
+
+
 def retrieve_movies():
     movies_dict = {}
     with open("dataset/movies.dat", "r") as file:

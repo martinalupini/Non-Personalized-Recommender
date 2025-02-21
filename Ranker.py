@@ -1,3 +1,5 @@
+__author__ = 'Martina Lupini'
+
 from itertools import islice
 
 

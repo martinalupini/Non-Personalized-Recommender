@@ -1,3 +1,5 @@
+__author__ = 'Martina Lupini'
+
 from Retriever import *
 from Ranker import *
 import os
