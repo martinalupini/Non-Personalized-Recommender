@@ -13,11 +13,12 @@ class Ranker:
         return X_and_Y / X, X_and_Y, X
 
 
-    def advanced_product_association(self, movieId_1, movieId_2):
+    def advanced_product_association(self, movieId_1, movieId_2, num_users):
         simple_product_association, X_and_Y, X = self.simple_product_association(movieId_1, movieId_2)
         Y = self.movies_dict[movieId_2]["Frequency"]
         not_X_and_Y = Y - X_and_Y
-        return simple_product_association / (not_X_and_Y / X)
+        not_X = num_users - X
+        return simple_product_association / (not_X_and_Y / not_X)
 
 
     def top_N_simple_product_association(self, movieId_1, N):
@@ -35,13 +36,13 @@ class Ranker:
         first_N_dict = dict(islice(sorted_dict.items(), N))
         return first_N_dict
 
-    def top_N_advanced_product_association(self, movieId_1, N):
+    def top_N_advanced_product_association(self, movieId_1, N, num_users):
         dictionary = {}
         # Creating a new dictionary containing the movies id as key and their associations value has value
         for movieId in self.movies_dict:
             if movieId == movieId_1:
                 continue
-            dictionary[movieId] = self.advanced_product_association(movieId_1, movieId)
+            dictionary[movieId] = self.advanced_product_association(movieId_1, movieId, num_users)
         # Sorting the dictionary based on the association value
         ascending_id_dict = dict(sorted(dictionary.items(), reverse=True))
         sorted_dict = dict(sorted(ascending_id_dict.items(), key=lambda item: item[1], reverse=True))
@@ -52,8 +53,8 @@ class Ranker:
 
     def top_N_rated_movies(self, N):
         # Sorting the dictionary based on frequence of each movie
-        ascending_id_dict = dict(sorted(dictionary.items(), reverse=True))
-        sorted_dict = dict(sorted(self.ascending_id_dict.items(), key=lambda item: item[1]['Frequency'], reverse=True))
+        ascending_id_dict = dict(sorted(self.movies_dict.items(), reverse=True))
+        sorted_dict = dict(sorted(ascending_id_dict.items(), key=lambda item: item[1]['Frequency'], reverse=True))
         # Returning the top N rated movies
         top_N_rated = dict(islice(sorted_dict.items(), N))
         return top_N_rated

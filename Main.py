@@ -7,6 +7,7 @@ import os
 
 def main():
     # First are the movies and associated rating are retrieved from the files movies.dat and ratings.dat
+    num_users = retrieve_user_number()
     movies_dict = retrieve_movies()
     retrieve_ratings(movies_dict)
 
@@ -69,7 +70,7 @@ def main():
                 except ValueError:
                     print("Invalid input! Please enter a numeric movie ID.")
 
-            value= ranker.advanced_product_association(movie_id1, movie_id2)
+            value = ranker.advanced_product_association(movie_id1, movie_id2, num_users)
             print(value)
             os.system('cls')
 
@@ -120,7 +121,7 @@ def main():
                 except ValueError:
                     print("Invalid input! Please enter number.")
 
-            top_N_dict = ranker.top_N_advanced_product_association(movie_id, N)
+            top_N_dict = ranker.top_N_advanced_product_association(movie_id, N, num_users)
             print_dictionary_association(top_N_dict, movies_dict)
             os.system('cls')
 
@@ -137,7 +138,7 @@ def main():
                     print("Invalid input! Please enter number.")
 
             top_N_dict = ranker.top_N_rated_movies(N)
-            print_top_N_ranked(top_N_dict)
+            print_top_N_ranked(top_N_dict, movies_dict)
             os.system('cls')
 
         elif choice == 6:
@@ -164,10 +165,10 @@ def print_dictionary_association(top_N_dict, movies_dict):
         i += 1
 
 
-def print_top_N_ranked(top_N_dict):
+def print_top_N_ranked(top_N_dict, movies_dict):
     i = 1
     for key in top_N_dict.items():
-        print(str(i) + ". " + "Movie ID: " + key + " Movie Title: " + top_N_dict.get(key)["Title"] + " # Users who rated: " + str(top_N_dict.get(key)["Frequency"]) + "\n")
+        print(str(i) + ". " + "Movie ID: " + key + " Movie Title: " + movies_dict.get(key)["Title"] + " # Users who rated: " + str(movies_dict.get(key)["Frequency"]) + "\n")
         i += 1
 
 
