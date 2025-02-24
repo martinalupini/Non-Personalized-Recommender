@@ -10,7 +10,11 @@ class Ranker:
     def simple_product_association(self, movieId_1, movieId_2):
         X = self.movies_dict[movieId_1]["Frequency"]
         X_and_Y = len(set(self.movies_dict[movieId_1]["Users"]) & set(self.movies_dict[movieId_2]["Users"]))
-        return X_and_Y / X, X_and_Y, X
+        if X ==0:
+            res = 0
+        else:
+            res = X_and_Y/X
+        return res, X_and_Y, X
 
 
     def advanced_product_association(self, movieId_1, movieId_2, num_users):
@@ -18,7 +22,11 @@ class Ranker:
         Y = self.movies_dict[movieId_2]["Frequency"]
         not_X_and_Y = Y - X_and_Y
         not_X = num_users - X
-        return simple_product_association / (not_X_and_Y / not_X)
+        if not_X_and_Y == 0 or not_X == 0:
+            res = 0
+        else:
+            res = simple_product_association / (not_X_and_Y / not_X)
+        return res
 
 
     def top_N_simple_product_association(self, movieId_1, N):

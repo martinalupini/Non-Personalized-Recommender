@@ -13,4 +13,4 @@ def print_top_N_ranked(top_N_dict):
 
 
 def print_movie_info(movie):
-    print("Movie Title:" + movie["Title"] + " Movie Genre: " + str(movie["Genre"]) + "\n" )
+    print("Movie Title:" + movie["Title"] + " Movie Genre: " + str(movie["Genres"]) + "\n" )

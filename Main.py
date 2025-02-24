@@ -15,15 +15,16 @@ def main():
     ranker = Ranker(movies_dict)
 
     while(1):
-        print("Select your option:\n" +
-            "[1] Calculate simple association rule\n" +
-            "[2] Calculate advanced association rule\n" +
-            "[3] Calculate top N movies with highest simple association value\n" +
-            "[4] Calculate top N movies with highest advanced association value\n" +
+        print("\n\nSelect your option:\n" +
+            "[1] Calculate simple product association rule\n" +
+            "[2] Calculate advanced product association rule\n" +
+            "[3] Calculate top N movies with highest simple product association value\n" +
+            "[4] Calculate top N movies with highest advanced product association value\n" +
             "[5] Calculate top N rated movies\n" +
             "[6] Calculate top N rated movies based on 4 star reviews\n" +
-            "[7] Get info about movie from its ID\n")
-        choice = int(input("Insert chioce (1-7): "))
+            "[7] Get info about movie from its ID\n" +
+            "[8] Exit\n")
+        choice = int(input("Insert chioce (1-8): "))
 
         if choice == 1:
             while True:
@@ -48,7 +49,6 @@ def main():
 
             value, _, _ = ranker.simple_product_association(movie_id1, movie_id2)
             print(value)
-            os.system('cls')
 
 
         elif choice == 2:
@@ -74,7 +74,6 @@ def main():
 
             value = ranker.advanced_product_association(movie_id1, movie_id2, num_users)
             print(value)
-            os.system('cls')
 
         elif choice == 3:
             while True:
@@ -99,7 +98,6 @@ def main():
 
             top_N_dict = ranker.top_N_simple_product_association(movie_id, N)
             print_dictionary_association(top_N_dict, movies_dict)
-            os.system('cls')
 
 
         elif choice == 4:
@@ -125,7 +123,6 @@ def main():
 
             top_N_dict = ranker.top_N_advanced_product_association(movie_id, N, num_users)
             print_dictionary_association(top_N_dict, movies_dict)
-            os.system('cls')
 
         elif choice == 5:
 
@@ -141,7 +138,6 @@ def main():
 
             top_N_dict = ranker.top_N_rated_movies(N, False)
             print_top_N_ranked(top_N_dict)
-            os.system('cls')
 
         elif choice == 6:
 
@@ -157,7 +153,6 @@ def main():
 
             top_N_dict = ranker.top_N_rated_movies(N, True)
             print_top_N_ranked(top_N_dict)
-            os.system('cls')
 
         elif choice == 7:
             while True:
@@ -171,6 +166,9 @@ def main():
                     print("Invalid input! Please enter a numeric movie ID.")
 
             print_movie_info(movies_dict[movie_id])
+
+        elif choice == 8:
+            exit()
 
         else:
             print("Invalid input! Please try again.")
