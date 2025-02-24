@@ -51,10 +51,13 @@ class Ranker:
         return first_N_dict
 
 
-    def top_N_rated_movies(self, N):
-        # Sorting the dictionary based on frequence of each movie
+    def top_N_rated_movies(self, N, is_4_star):
+        # Sorting the dictionary based on frequency of each movie
         ascending_id_dict = dict(sorted(self.movies_dict.items(), reverse=True))
-        sorted_dict = dict(sorted(ascending_id_dict.items(), key=lambda item: item[1]['Frequency'], reverse=True))
+        if is_4_star:
+            sorted_dict = dict(sorted(ascending_id_dict.items(), key=lambda item: item[1]['Users_4_star'], reverse=True))
+        else:
+            sorted_dict = dict(sorted(ascending_id_dict.items(), key=lambda item: item[1]['Frequency'], reverse=True))
         # Returning the top N rated movies
         top_N_rated = dict(islice(sorted_dict.items(), N))
         return top_N_rated

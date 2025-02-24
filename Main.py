@@ -2,6 +2,7 @@ __author__ = 'Martina Lupini'
 
 from Retriever import *
 from Ranker import *
+from PrintUtils import *
 import os
 
 
@@ -20,8 +21,9 @@ def main():
             "[3] Calculate top N movies with highest simple association value\n" +
             "[4] Calculate top N movies with highest advanced association value\n" +
             "[5] Calculate top N rated movies\n" +
-            "[6] Get info about movie from its ID\n")
-        choice = int(input("Insert chioce (1-5): "))
+            "[6] Calculate top N rated movies based on 4 star reviews\n" +
+            "[7] Get info about movie from its ID\n")
+        choice = int(input("Insert chioce (1-7): "))
 
         if choice == 1:
             while True:
@@ -137,11 +139,27 @@ def main():
                 except ValueError:
                     print("Invalid input! Please enter number.")
 
-            top_N_dict = ranker.top_N_rated_movies(N)
-            print_top_N_ranked(top_N_dict, movies_dict)
+            top_N_dict = ranker.top_N_rated_movies(N, False)
+            print_top_N_ranked(top_N_dict)
             os.system('cls')
 
         elif choice == 6:
+
+            while True:
+                try:
+                    N = int(input("Insert N: "))
+                    if N > 0 and N < len(movies_dict):
+                        break  # Exit loop once a valid ID is entered
+                    else:
+                        print("Invalid N (too large or negative)! Please try again.")
+                except ValueError:
+                    print("Invalid input! Please enter number.")
+
+            top_N_dict = ranker.top_N_rated_movies(N, True)
+            print_top_N_ranked(top_N_dict)
+            os.system('cls')
+
+        elif choice == 7:
             while True:
                 try:
                     movie_id = input("Insert movie ID: ")
@@ -152,24 +170,10 @@ def main():
                 except ValueError:
                     print("Invalid input! Please enter a numeric movie ID.")
 
-            print(movies_dict[movie_id])
+            print_movie_info(movies_dict[movie_id])
 
         else:
             print("Invalid input! Please try again.")
-
-
-def print_dictionary_association(top_N_dict, movies_dict):
-    i = 1
-    for key, value in top_N_dict.items():
-        print(str(i) + ". " + "Movie ID: " + key + " Movie Title: " + movies_dict.get(key)["Title"] + " Association Value: " + str(value) + "\n")
-        i += 1
-
-
-def print_top_N_ranked(top_N_dict, movies_dict):
-    i = 1
-    for key in top_N_dict.items():
-        print(str(i) + ". " + "Movie ID: " + key + " Movie Title: " + movies_dict.get(key)["Title"] + " # Users who rated: " + str(movies_dict.get(key)["Frequency"]) + "\n")
-        i += 1
 
 
 if __name__ == "__main__":
