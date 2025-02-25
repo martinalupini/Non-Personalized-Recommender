@@ -7,9 +7,11 @@ import os
 
 
 def main():
-    # First are the movies and associated rating are retrieved from the files movies.dat and ratings.dat
+    # First we retrieve the total number of users
     num_users = retrieve_user_number()
+    # Then we retrieve the information about the movies from file movie.dat
     movies_dict = retrieve_movies()
+    # Lastly, the information about the ratings are retrieved from ratings.dat and connected to movies
     retrieve_ratings(movies_dict)
 
     ranker = Ranker(movies_dict)
@@ -21,7 +23,7 @@ def main():
             "[3] Calculate top N movies with highest simple product association value\n" +
             "[4] Calculate top N movies with highest advanced product association value\n" +
             "[5] Calculate top N rated movies\n" +
-            "[6] Calculate top N rated movies based on 4 star reviews\n" +
+            "[6] Calculate top N rated movies based on 4 and 5 star reviews\n" +
             "[7] Get info about movie from its ID\n" +
             "[8] Exit\n")
         choice = int(input("Insert chioce (1-8): "))
@@ -137,7 +139,7 @@ def main():
                     print("Invalid input! Please enter number.")
 
             top_N_dict = ranker.top_N_rated_movies(N, False)
-            print_top_N_ranked(top_N_dict)
+            print_top_N_ranked(top_N_dict, False)
 
         elif choice == 6:
 
@@ -152,7 +154,7 @@ def main():
                     print("Invalid input! Please enter number.")
 
             top_N_dict = ranker.top_N_rated_movies(N, True)
-            print_top_N_ranked(top_N_dict)
+            print_top_N_ranked(top_N_dict, True)
 
         elif choice == 7:
             while True:
