@@ -1,5 +1,3 @@
-# Non-Personalized Recommender System
-
 # Assignment 1: Non-Personalized Recommender System
 
 The aim of this assignment is to implement a non-personalized recommender system based on product association rules. The dataset is divided into three parts:
