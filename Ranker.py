@@ -37,8 +37,12 @@ class Ranker:
         not_X_and_Y = Y - X_and_Y
         # not_X is the number of users who didn't rate @movieId_1
         not_X = num_users - X
-        # In the case of 0 in the denominator than the advanced association value is put to 0
-        if not_X_and_Y == 0 or not_X == 0:
+        # If !X_and_Y == 0 and Y != 0 then !X == 0 (that means that all the users rated X).
+        # So every person who rated Y also rated X.
+        if not_X_and_Y == 0 and Y != 0 :
+            res = float('inf')
+        # If Y == 0 that means that Y has no ratings.
+        elif Y == 0:
             res = 0
         else:
             res = simple_product_association / (not_X_and_Y / not_X)
